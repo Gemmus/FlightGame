@@ -15,8 +15,8 @@ def distance_emission_calculator(current_location, next_location):
         current_coordinate.append(coordinate)
     for coordinate in next_icao:
         next_coordinate.append(coordinate)
-    distance_between_locations = round(distance.distance(tuple(current_coordinate), tuple(next_coordinate)).km, 2)
-    additional_emission = round(distance_between_locations * 0.156, 2)
+    distance_between_locations = round(distance.distance(tuple(current_coordinate), tuple(next_coordinate)).km)
+    additional_emission = round(distance_between_locations * 0.156)
     return distance_between_locations, additional_emission
 
 
@@ -32,6 +32,7 @@ connection = mysql.connector.connect(
 old = 'EGKK'
 new = 'LEIB'
 odometer = distance_emission_calculator(old, new)
-print(f"They are {odometer[1]}km away and the travel generates {odometer[1]}kg")
+print(odometer)
+print(f"They are {odometer[0]}km away and it creates {odometer[1]}kg")
 
 
