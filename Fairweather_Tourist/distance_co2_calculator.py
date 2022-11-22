@@ -33,6 +33,6 @@ old = 'EGKK'
 new = 'LEIB'
 odometer = distance_emission_calculator(old, new)
 print(odometer)
-print(f"They are {odometer[0]}km away and it creates {odometer[1]}kg")
+print(f"They are {odometer[0]}km away and the travel generates {odometer[1]}kg")
 
 
