@@ -63,7 +63,7 @@ goal_wind = True
 goal_snow = True
 
 # loop:
-while score < 3000 or co2_consumed < 3500:
+while score < 3000 and co2_consumed < 3500:
     now_location = order_of_visits[-1]
     new_location = input("Enter icao_code: ").upper()
     while new_location in visited_locations:                                           # no visit of the same
@@ -89,8 +89,8 @@ while score < 3000 or co2_consumed < 3500:
         print(f"Easter Egg guessed: +{base_score*2}")
         print(f"New score: {score}")
 
-    if new_location in london_airports or weather_condition == 'Rain':                  # London & rain
-        if new_location in london_airports and weather_condition == 'Rain':
+    if new_location in london_airports or weather_condition == 'Rain' or weather_condition == 'Drizzle':                  # London & rain
+        if new_location in london_airports and (weather_condition == 'Rain' or weather_condition == 'Drizzle'):
             if goal_rain:
                 score += base_score * 2
                 goal_rain = False
@@ -216,7 +216,7 @@ while score < 3000 or co2_consumed < 3500:
 
 
 # out of the loop, outcome:
-if score > 2500:
+if score > 3000:
     print(f"You won :), score {score} points.")
 else:
     print(f"Too much emission :(, {co2_consumed} kg.")
