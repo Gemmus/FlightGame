@@ -1,3 +1,5 @@
+# Fetches all the big European airports and "json"-ed it.
+
 import mysql.connector
 import json
 
@@ -10,6 +12,7 @@ def airport_fetcher():
         "FROM airport, country WHERE airport.iso_country = country.iso_country AND airport.type = '" + "large_airport" + "'"
         "AND country.continent = '" + "EU" + "'")
     result = cursor.fetchall()
+    print(result)
     if cursor.rowcount > 0:
         for row in result:
             response = {
@@ -18,7 +21,7 @@ def airport_fetcher():
                 "location": row[2],
                 "country": row[3],
                 "latitude": row[4],
-                "longitude": row[5]
+                "longitude": row[5],
             }
             json.dumps(response, default=lambda o: o.__dict__, indent=4)
             list_of_big_european_airports.append(response)

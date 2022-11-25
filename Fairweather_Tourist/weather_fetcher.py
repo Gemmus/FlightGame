@@ -1,3 +1,5 @@
+# Gets the weather with latitude and longitude.
+
 import requests
 import json
 import math

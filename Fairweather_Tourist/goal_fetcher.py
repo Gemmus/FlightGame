@@ -1,3 +1,5 @@
+# Fetches the goal table.
+
 import mysql.connector
 import json
 
@@ -35,6 +37,5 @@ connection = mysql.connector.connect(
          password='CamdenTown',
          autocommit=True
          )
-
 
 array_of_goals = goal_fetcher()

@@ -1,3 +1,5 @@
+# Takes two icao code, fetches their coordinates and calculates distance and CO2 emission.
+
 import mysql.connector
 from geopy import distance
 

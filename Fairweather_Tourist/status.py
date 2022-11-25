@@ -7,9 +7,3 @@ class Player:
         self.co2_consumed = co2_consumed
         self.co2_budget = co2_budget
         self.current_location = list_of_previous_location[-1]
-
-
-
-
-
-
