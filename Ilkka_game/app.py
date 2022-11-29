@@ -26,6 +26,7 @@ config.conn = mysql.connector.connect(
          autocommit=True
          )
 
+
 def fly(id, dest, consumption=0, player=None):
     if id==0:
         game = Game(0, dest, consumption, player)
@@ -59,6 +60,7 @@ def newgame():
     dest = args.get("loc")
     json_data = fly(0, dest, 0, player)
     return json_data
+
 
 if __name__ == '__main__':
     app.run(use_reloader=True, host='127.0.0.1', port=5000)
