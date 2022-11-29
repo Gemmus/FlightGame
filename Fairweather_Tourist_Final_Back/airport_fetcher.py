@@ -1,6 +1,7 @@
 import mysql.connector
 import json
 from icao_weather_fetcher import weather_fetcher
+from distance_co2_calculator import distance_emission_calculator
 
 
 def airport_fetcher(icao):
@@ -30,6 +31,7 @@ def airport_fetcher(icao):
                 list_of_big_european_airports.insert(0, response)
             else:
                 active = False
+                distance, co2_consumption = distance_emission_calculator(icao, row[0])
                 response = {
                     "ident": row[0],
                     "active": active,
@@ -38,6 +40,8 @@ def airport_fetcher(icao):
                     "country": row[3],
                     "latitude": row[4],
                     "longitude": row[5],
+                    "distance": distance,
+                    "co2_consumption": co2_consumption,
                 }
                 json.dumps(response, default=lambda o: o.__dict__, indent=4)
                 list_of_big_european_airports.append(response)

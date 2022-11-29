@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/Fairweather_Tourist_Final_Back/airport_fetcher.py" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Fairweather_Tourist_Final_Back/distance_co2_calculator.py" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/Fairweather_Tourist_Final_Back/icao_weather_fetcher.py" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Fairweather_Tourist_Final_Back/player_status.py" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/Fairweather_Tourist_Prototype/Fairweather_Tourist_with_API.py" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/Fairweather_Tourist_Prototype/distance_co2_calculator.py" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/Fairweather_Tourist_Prototype/goal_fetcher.py" dialect="GenericSQL" />
