@@ -185,7 +185,7 @@ while score < 3000 and co2_consumed < 3500:
                 print(f"'Sunny' goal reached: +{base_score}")
                 print(f"New score: {score}")
 
-    if new_location == "BIKF" or weather_condition == 'Snow':                         # Rejkjavik & snow
+    if new_location == "BIKF" or weather_condition == 'Snow':                         # Reykjavik & snow
         if new_location == "BIKF" and weather_condition == 'Snow':
             if goal_snow:
                 score += base_score * 2

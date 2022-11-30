@@ -20,8 +20,6 @@ def weather_fetcher(icao):
         rounded_wind = math.floor(wind_speed + 0.5)
         weather_condition = {
             "main": response['weather'][0]['main'],
-            "description": response['weather'][0]['description'],
-            "icon": response['weather'][0]['icon'],
             "temp": rounded_celsius,
             "wind": rounded_wind
         }

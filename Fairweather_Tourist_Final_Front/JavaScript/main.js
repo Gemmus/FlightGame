@@ -17,17 +17,18 @@ let score = 0;
 let co2_consumed = 0;
 let co2_budget = 2000;
 let travelled_distance = 0;
-let london = true;
-let caparica = true;
-let prague = true;
-let ibiza = true;
-let reykjavik = true;
-let budapest = true;
-let rainy = true;
-let windy = true;
-let cloudy = true;
-let sunny = true;
-let snows = true;
+let london = Boolean(true);
+let caparica = Boolean(true);
+let prague = Boolean(true);
+let ibiza = Boolean(true);
+let reykjavik = Boolean(true);
+let budapest = Boolean(true);
+let rainy = Boolean(true);
+let windy = Boolean(true);
+let cloudy = Boolean(true);
+let sunny = Boolean(true);
+let snows = Boolean(true);
+let endOfGame = Boolean(false);
 
 // EventListener for username:
 document.querySelector('#player-form').addEventListener('submit', function (evt) {
@@ -58,25 +59,186 @@ async function gameSetup(url) {
 
 // Function for chosen new locations:
 async function flyTo(url, previous_data) {
-  document.querySelector('.update-box').innerHTML = '';
-  document.querySelector('.text-box').innerHTML = '';
-  updateState(previous_data)
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    updateWeather(data[0]);
-    await addDestination(data);
-    await goalChecker(data[0]);
-  } catch (error) {
-    console.log('Error 2')
+  if (!endOfGame) {
+    document.querySelector('.nothing-box').innerHTML = '';
+    document.querySelector('.update-box').innerHTML = '';
+    document.querySelector('.weather-box').innerHTML = '';
+    document.querySelector('.text-box').innerHTML = '';
+    updateState(previous_data)
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      updateWeather(data[0]);
+      await addDestination(data);
+      goalChecker(data[0]);
+
+    } catch (error) {
+      console.log('Error 2')
+    }
   }
 }
 
 // Function to check if any of the goals were reached:
-async function goalChecker(data) {
-  console.log(data)
+function goalChecker(data) {
+  // Budapest
+  if (data.ident === 'LHBP' && budapest) {
+    score += 1000;
+    updateScore();
+    document.querySelector('.update-box').innerHTML = `You guessed the Easter Egg location: +1000points.`;
+    budapestPrinter();
+    budapest = Boolean(false);
+  }
+  // London & Rain
+  if (london || rainy) {
+    if (london && rainy && (data.weather.main === 'Rain' || data.weather.main === 'Drizzle') && (data.ident === 'EGKK' || data.ident === 'EGSS' || data.ident === 'EGGW' || data.ident === 'EGLL')) {
+      score += 1000;
+      updateScore();
+      document.querySelector('.update-box').innerHTML = `You guessed the first secret location and it rains: +1000points.`;
+      document.querySelector('.goal-rainy').classList.add('done');
+      londonPrinter();
+      london = Boolean(false);
+      rainy = Boolean(false);
+    }
+    else if (london && (data.ident === 'EGKK' || data.ident === 'EGSS' || data.ident === 'EGGW' || data.ident === 'EGLL')) {
+      score += 300;
+      updateScore();
+      document.querySelector('.update-box').innerHTML = `You guessed the first secret location: +300points.`;
+      londonPrinter();
+      london = Boolean(false);
+    }
+    else if (rainy && (data.weather.main === 'Rain' || data.weather.main === 'Drizzle')) {
+      score += 500;
+      updateScore();
+      document.querySelector('.weather-box').innerHTML = `It's raining: +500points.`;
+      document.querySelector('.goal-rainy').classList.add('done');
+      rainy = Boolean(false);
+    }
+  }
+  //Caparica & wind
+  if (caparica || windy) {
+    if (caparica && windy && data.weather.wind >= 10 && data.ident === 'LPPT') {
+      score += 1000;
+      updateScore();
+      document.querySelector('.update-box').innerHTML = `You guessed the second secret location and it's windy: +1000points.`;
+      document.querySelector('.goal-windy').classList.add('done');
+      caparicaPrinter();
+      caparica = Boolean(false);
+      windy = Boolean(false);
+    }
+    else if (caparica && data.ident === 'LPPT') {
+      score += 300;
+      updateScore();
+      document.querySelector('.update-box').innerHTML = `You guessed the second secret location: +300points.`;
+      caparicaPrinter();
+      caparica = Boolean(false);
+    }
+    else if (windy && data.weather.wind >= 10) {
+      score += 500;
+      updateScore();
+      document.querySelector('.weather-box').innerHTML = `It's windy: +500points.`;
+      document.querySelector('.goal-windy').classList.add('done');
+      windy = Boolean(false);
+    }
+  }
+  // Prague & clouds
+  if (prague || cloudy) {
+    if (prague && cloudy && data.weather.main === 'Clouds' && data.ident === 'LKPR') {
+      score += 1000;
+      updateScore();
+      document.querySelector('.update-box').innerHTML = `You guessed the third secret location and it's cloudy: +1000points.`;
+      document.querySelector('.goal-cloudy').classList.add('done');
+      praguePrinter();
+      prague = Boolean(false);
+      cloudy = Boolean(false);
+    }
+    else if (prague && data.ident === 'LKPR') {
+      score += 300;
+      updateScore();
+      document.querySelector('.update-box').innerHTML = `You guessed the third secret location: +300points.`;
+      praguePrinter();
+      prague = Boolean(false);
+    }
+    else if (cloudy && data.weather.main === 'Clouds') {
+      score += 500;
+      updateScore();
+      document.querySelector('.weather-box').innerHTML = `It's cloudy: +500points.`;
+      document.querySelector('.goal-cloudy').classList.add('done');
+      cloudy = Boolean(false);
+    }
+  }
+  // Ibiza & sunny
+  if (ibiza || sunny) {
+    if (ibiza && sunny && data.weather.temp >= 15 && data.ident === 'LEIB') {
+      score += 1000;
+      updateScore();
+      document.querySelector('.update-box').innerHTML = `You guessed the fourth secret location and it's sunny: +1000points.`;
+      document.querySelector('.goal-sunny').classList.add('done');
+      ibizaPrinter();
+      ibiza = Boolean(false);
+      sunny = Boolean(false);
+    }
+    else if (ibiza && data.ident === 'LEIB') {
+      score += 300;
+      updateScore();
+      document.querySelector('.update-box').innerHTML = `You guessed the fourth secret location: +300points.`;
+      ibizaPrinter();
+      ibiza = Boolean(false);
+    }
+    else if (sunny && data.weather.temp >= 15) {
+      score += 500;
+      updateScore();
+      document.querySelector('.weather-box').innerHTML = `It's sunny: +500points.`;
+      document.querySelector('.goal-sunny').classList.add('done');
+      sunny = Boolean(false);
+    }
+  }
+  // Reykjavik & snow
+  if (reykjavik || snows) {
+    if (reykjavik && snows && data.weather.main === 'Snow' && data.ident === 'BIKF') {
+      score += 1000;
+      updateScore();
+      document.querySelector('.update-box').innerHTML = `You guessed the fifth secret location and it snows: +1000points.`;
+      document.querySelector('.goal-snows').classList.add('done');
+      reykjavikPrinter();
+      reykjavik = Boolean(false);
+      snows = Boolean(false);
+    }
+    else if (reykjavik && data.ident === 'BIKF') {
+      score += 300;
+      updateScore();
+      document.querySelector('.update-box').innerHTML = `You guessed the fifth secret location: +300points.`;
+      reykjavikPrinter();
+      reykjavik = Boolean(false);
+    }
+    else if (snows && data.weather.main === 'Snow') {
+      score += 500;
+      updateScore();
+      document.querySelector('.weather-box').innerHTML = `It snows: +500points.`;
+      document.querySelector('.goal-snows').classList.add('done');
+      snows = Boolean(false);
+    }
+  }
+  progressChecker()
+}
 
+// Function to check progress
+function progressChecker() {
+  document.querySelector('.nothing-box').innerHTML = `Please select your next location.`;
+  if (score > 3000) {
+     document.querySelector('.order-box').innerHTML = `<b>You won ${playerName}!!! :) Your final score is: ${score} points.</b>`;
+     document.querySelector('.nothing-box').innerHTML = "";
+     endOfGame = Boolean(true);
+  }
+  if (co2_budget < 0) {
+    document.querySelector('.order-box').innerHTML = `<b>You lost ${playerName} :( Exceeded CO2 budget.</b>`;
+    document.querySelector('.nothing-box').innerHTML = "";
+    endOfGame = Boolean(true);
+  }
+}
 
+// Function to update score:
+function updateScore() {
+  document.querySelector('#current-score').innerHTML = `${score} points`;
 }
 
 // Function to add the map markers based to current location:
@@ -102,7 +264,7 @@ async function addDestination(data) {
         popupContent.append(flyToBtn);
         marker.bindPopup(popupContent);
         flyToBtn.addEventListener('click', function () {
-            flyTo(`${apiUrl}fly_to?new_loc=${airport.ident}`, airport);
+          flyTo(`${apiUrl}fly_to?new_loc=${airport.ident}`, airport);
         })
       }
   }

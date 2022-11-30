@@ -146,10 +146,17 @@ ul {
 .update-box {
     text-align: center;
 }
+.weather-box {
+    text-align: center;
+}
 .text-box {
     text-align: left;
 }
 .order-box {
+    text-align: center;
+    font-size: 1.2rem;
+}
+.nothing-box {
     text-align: center;
 }
 p {
