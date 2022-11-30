@@ -9,8 +9,8 @@ map.setView([60, 24], 7);
 
 // Global variables:
 const apiUrl = 'http://127.0.0.1:5000/';
+let playerName;
 let current_location = 'EFHK';
-let list_of_visited_placed = ['EFHK'];
 const activeIcon = L.divIcon({className: 'active-icon'});
 const passiveIcon = L.divIcon({className: 'passive-icon'});
 let score = 0;
@@ -23,14 +23,19 @@ let prague = true;
 let ibiza = true;
 let reykjavik = true;
 let budapest = true;
+let rainy = true;
+let windy = true;
+let cloudy = true;
+let sunny = true;
+let snows = true;
 
 // EventListener for username:
 document.querySelector('#player-form').addEventListener('submit', function (evt) {
   evt.preventDefault();
-  const playerName = document.querySelector('#player-input').value;
+  playerName = document.querySelector('#player-input').value;
   document.getElementById('replace-name').innerHTML = `<b>${playerName}</b>`;
-  document.querySelector('.update-box').innerHTML = `Welcome, ${playerName}! Let's select your first destination!`;
   document.querySelector('#player-modal').classList.add('hide');
+  rule();
   gameSetup(`${apiUrl}new_game?player=${playerName}&loc=${current_location}`);
 });
 
@@ -51,19 +56,30 @@ async function gameSetup(url) {
   }
   }
 
+// Function for chosen new locations:
 async function flyTo(url, previous_data) {
-  console.log(previous_data);
-  updateState(previous_data);
+  document.querySelector('.update-box').innerHTML = '';
+  document.querySelector('.text-box').innerHTML = '';
+  updateState(previous_data)
   try {
     const response = await fetch(url);
     const data = await response.json();
     updateWeather(data[0]);
     await addDestination(data);
+    await goalChecker(data[0]);
   } catch (error) {
     console.log('Error 2')
   }
 }
 
+// Function to check if any of the goals were reached:
+async function goalChecker(data) {
+  console.log(data)
+
+
+}
+
+// Function to add the map markers based to current location:
 async function addDestination(data) {
   for (let airport of data) {
     const marker = L.marker([airport.latitude, airport.longitude]).addTo(map);
@@ -92,15 +108,15 @@ async function addDestination(data) {
   }
 }
 
+// Function to update weather row of current location:
 function updateWeather(data) {
-      document.getElementById('current-weather-condition').innerHTML = data.weather.main;
-    document.getElementById('current-temperature').innerHTML = `Temperature: ${data.weather.temp}°C`;
-    document.getElementById('current-wind-speed').innerHTML = `Wind: ${data.weather.wind}m/s`;
+  document.getElementById('current-weather-condition').innerHTML = data.weather.main;
+  document.getElementById('current-temperature').innerHTML = `Temperature: ${data.weather.temp}°C`;
+  document.getElementById('current-wind-speed').innerHTML = `Wind: ${data.weather.wind}m/s`;
 }
 
+// Function to update CO2 emission and distance:
 function updateState(data) {
-  list_of_visited_placed.push(data.ident);
-  console.log(list_of_visited_placed);
   co2_consumed += data.co2_consumption;
   co2_budget -= data.co2_consumption;
   travelled_distance += data.distance;
@@ -112,8 +128,7 @@ function updateState(data) {
   document.getElementById('current-country').innerHTML = data.country;
 }
 
-
-// fun fact functions
+// Functions for fun facts:
 function londonPrinter() {
   london = false;
   const london_riddle = document.querySelector('.riddle1');
@@ -160,4 +175,18 @@ function budapestPrinter() {
   budapest_riddle.classList.add('done');
   budapest_riddle.innerHTML = 'Budapest, Hungary';
   document.querySelector('.text-box').innerHTML = `Fun fact:<br><b>“If you ever visit it, pay attention to the buildings. They are old, a lot of their facade is deteriorating and a lot of them have bullet marks from WWII and the Hungarian Revolution of 1956. When it gets dark, if you take a walk at the bank of the Danube, it’s beautifully lit up.”</b>`;
+}
+
+// Function for rules:
+function rule() {
+  document.querySelector('.update-box').innerHTML = `Welcome, ${playerName}! Let's select your first destination!`;
+  document.querySelector('.text-box').innerHTML = `You have had this bucket list for a while now and it's time to put things finally into motion!<br>
+    - You wish to visit 5 + 1 secret locations and reach 5 weather targets in Europe.<br>
+    - Each secret location has an assigned weather goal, they are paired the same way as they are listed.<br>
+    - I ask you kindly to take into consideration sustainability. I will be your conscience and not allow you to travel further if CO2 emission reaches 2 tonnes.<br>
+    The scoring system works the following way: 3000 points are needed to win.<br>
+    - Guessed secret location with its assigned weather target: +1000 points<br>
+    - Reached weather target, but not at the secret location: +500 points<br>
+    - Guessed secret location without weather target: +300 points<br>
+    - Guessed "Easter Egg" location: +1000 points<br>`
 }
