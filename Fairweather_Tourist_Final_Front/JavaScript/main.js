@@ -39,6 +39,11 @@ let endOfGame = Boolean(false);
 // // // // // // // // // // // //
 // EventListener for username:   //
 // // // // // // // // // // // //
+// Displays chosen name
+// Hides modal
+// Calls function rule, which displays the rules to output field
+// Calls async function gameSetup
+
 document.querySelector('#player-form').addEventListener('submit', function (evt) {
   evt.preventDefault();
   playerName = document.querySelector('#player-input').value;
@@ -52,6 +57,13 @@ document.querySelector('#player-form').addEventListener('submit', function (evt)
 // // // // // // // // // // // //
 // Setting up the game:          //
 // // // // // // // // // // // //
+// Called by eventListener, parameter: url
+// Communication with python, provides current location
+// Response is provided in a form of json data by python
+// Calls function updateWeather, which displays the current weather of the current location
+// Calls function updateLocation, which the current location
+// Calls function addDestination, which appends the markers to the map
+
 async function gameSetup(url) {
   try {
     const response = await fetch(url);
@@ -68,13 +80,23 @@ async function gameSetup(url) {
 // // // // // // // // // // // // // // //
 // Function for chosen new locations:     //
 // // // // // // // // // // // // // // //
+// Called by async function addDestination, parameter: url of new location and the data fetched previous round
+// Allows players to travel while game is not over
+// Empties previous outputs
+// Communicates and fetches data based on new location with python
+// Calls function updateState, which updates CO2 budget, emission and distance
+// Calls function updateLocation, which the current location
+// Calls function addDestination, which appends the markers to the map
+// Calls function updateWeather, which displays the current weather of the current location
+// Calls function goalChecker, which matches data with goals
+
 async function flyTo(url, previous_data) {
   if (!endOfGame) {
     document.querySelector('.nothing-box').innerHTML = '';
     document.querySelector('.update-box').innerHTML = '';
     document.querySelector('.weather-box').innerHTML = '';
     document.querySelector('.text-box').innerHTML = '';
-    updateState(previous_data)
+    updateState(previous_data);
     updateLocation(previous_data);
     try {
       const response = await fetch(url);
@@ -83,15 +105,17 @@ async function flyTo(url, previous_data) {
       updateWeather(data[0]);
       goalChecker(data[0]);
     } catch (error) {
-      console.log('Error 2')
+      console.log('Error 2');
     }
   }
 }
 
 
-// // // // // // // // // // // //
-// Function for rules:           //
-// // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+// Function to print the rules to output field:          //
+// // // // // // // // // // // // // // // // // // // //
+// Called by eventListener (from modal)
+
 function rule() {
   document.querySelector('.update-box').innerHTML = `Welcome, ${playerName}! Let's select your first destination!`;
   document.querySelector('.text-box').innerHTML = `You have had this bucket list for a while now and it's time to put things finally into motion!<br>
@@ -109,6 +133,10 @@ function rule() {
 // // // // // // // // // // // // // // // // // // // // // // // //
 // Function to add the map markers based to current location:        //
 // // // // // // // // // // // // // // // // // // // // // // // //
+// Called by functions gameSetup and flyTo, parameter: data based on new location/state
+// Appends the markers to the map and displays popups
+// Calls function flyTo when Travel button is clicked
+
 async function addDestination(data) {
   for (let airport of data) {
     const marker = L.marker([airport.latitude, airport.longitude]).addTo(map);
@@ -138,9 +166,12 @@ async function addDestination(data) {
 }
 
 
-// // // // // // // // // // // // // // // // // // // // // // // //
-// Function to update weather row of current location:               //
-// // // // // // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // //
+// Function to update weather row:        //
+// // // // // // // // // // // // // // //
+// Called by functions gameSetup and flyTo, parameter: data of current location
+// Updates displayed current weather
+
 function updateWeather(data) {
     document.getElementById('current-weather-condition').innerHTML = data.weather.main;
     document.getElementById('current-temperature').innerHTML = `Temperature: ${data.weather.temp}°C`;
@@ -148,9 +179,12 @@ function updateWeather(data) {
 }
 
 
-// // // // // // // // // // // //
-// Function to update location:  //
-// // // // // // // // // // // //
+// // // // // // // // // // // // // //
+// Function to update location row:    //
+// // // // // // // // // // // // // //
+// Called by functions gameSetup and flyTo, parameter: data of current location
+// Updates displayed current location
+
 function updateLocation(data) {
     document.getElementById('current-airport').innerHTML = data.name;
     document.getElementById('current-city').innerHTML = data.location;
@@ -158,9 +192,12 @@ function updateLocation(data) {
 }
 
 
-// // // // // // // // // // // // // // // // // // // //
-// Function to update CO2 emission and distance:         //
-// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // // // // // // // //
+// Function to update and display CO2 emission and distance rows:          //
+// // // // // // // // // // // // // // // // // // // // // // // // // //
+// Called by async function flyTo, parameter: previous data, which contains CO2, distance generated during travel
+// Updates displayed CO2 values and distance
+
 function updateState(data) {
   co2_consumed += data.co2_consumption;
   co2_budget -= data.co2_consumption;
@@ -170,8 +207,9 @@ function updateState(data) {
   document.getElementById('current-odometer').innerHTML = `Travelled distance: ${travelled_distance}km`;
 }
 
+
 // // // // // // // // // // // // // // // // // // // // // // // //
-// Function to check if any of the goals were reached:               //
+// Function to check if any of the goals are reached:                //
 // // // // // // // // // // // // // // // // // // // // // // // //
 function goalChecker(data) {
   // Budapest
@@ -292,8 +330,11 @@ function goalChecker(data) {
 // // // // // // // // // // // //
 // Function to update score:     //
 // // // // // // // // // // // //
+// Called by function goalChecker, parameter: addition score
+// Adds additional score to existing score and displays new score
+
 function updateScore(addition) {
-    score += addition;
+  score += addition;
   document.querySelector('#current-score').innerHTML = `${score} points`;
 }
 
@@ -301,6 +342,10 @@ function updateScore(addition) {
 // // // // // // // // // // // //
 // Function to check progress:   //
 // // // // // // // // // // // //
+// Called by function goalChecker at the end
+// Checks if score is 3000 or more ---> Boolean changes to true, game ends, player cannot travel further ---> Win
+// Checks if CO2 budget is 0 or less ---> Boolean changes to true, game ends, player cannot travel further ---> Loose
+
 function progressChecker() {
   document.querySelector('.nothing-box').innerHTML = `Please select your next location.`;
   if (score >= 3000) {
@@ -319,6 +364,11 @@ function progressChecker() {
 // // // // // // // // // // // //
 // Functions for fun facts:      //
 // // // // // // // // // // // //
+// Each function is called by function goalChecker when the right place is visited:
+// - boolean turns false to avoid getting the score twice for revisiting the same place
+// - hides the riddle box and changes the text to the actual location
+// - displays the fun fact in the output field
+
 function londonPrinter() {
   london = Boolean(false);
   const london_riddle = document.querySelector('.riddle1');
