@@ -4,10 +4,9 @@
     <file url="file://$PROJECT_DIR$/Fairweather_Tourist_Final_Back/airport_fetcher.py" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/Fairweather_Tourist_Final_Back/distance_co2_calculator.py" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/Fairweather_Tourist_Final_Back/icao_weather_fetcher.py" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/Fairweather_Tourist_Final_Back/player_status.py" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/Fairweather_Tourist_Prototype/Fairweather_Tourist_with_API.py" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/Fairweather_Tourist_Prototype/distance_co2_calculator.py" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/Fairweather_Tourist_Prototype/goal_fetcher.py" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/Fairweather_Tourist_Prototype/player_status.py" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Storage/distance_co2_calculator.py" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Storage/goal_fetcher.py" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Storage/player_status.py" dialect="GenericSQL" />
   </component>
 </project>
