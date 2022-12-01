@@ -3,6 +3,7 @@
 // // // // // // // // // // // //
 // Map:                          //
 // // // // // // // // // // // //
+
 const map = L.map('map', {tap: false});
 L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
   maxZoom: 20,
@@ -14,6 +15,7 @@ map.setView([60, 24], 7);
 // // // // // // // // // // // //
 // Global variables:             //
 // // // // // // // // // // // //
+
 const apiUrl = 'http://127.0.0.1:5000/';
 let playerName;
 const activeIcon = L.divIcon({className: 'active-icon'});
@@ -39,8 +41,7 @@ let endOfGame = Boolean(false);
 // // // // // // // // // // // //
 // EventListener for username:   //
 // // // // // // // // // // // //
-// Displays chosen name
-// Hides modal
+// Displays chosen name and hides modal
 // Calls function rule, which displays the rules to output field
 // Calls async function gameSetup
 
@@ -115,6 +116,7 @@ async function flyTo(url, previous_data) {
 // Function to print the rules to output field:          //
 // // // // // // // // // // // // // // // // // // // //
 // Called by eventListener (from modal)
+// Displays rules to output
 
 function rule() {
   document.querySelector('.update-box').innerHTML = `Welcome, ${playerName}! Let's select your first destination!`;
@@ -133,7 +135,7 @@ function rule() {
 // // // // // // // // // // // // // // // // // // // // // // // //
 // Function to add the map markers based to current location:        //
 // // // // // // // // // // // // // // // // // // // // // // // //
-// Called by functions gameSetup and flyTo, parameter: data based on new location/state
+// Called by functions gameSetup and flyTo, parameter: data of new, current location
 // Appends the markers to the map and displays popups
 // Calls function flyTo when Travel button is clicked
 
@@ -211,6 +213,12 @@ function updateState(data) {
 // // // // // // // // // // // // // // // // // // // // // // // //
 // Function to check if any of the goals are reached:                //
 // // // // // // // // // // // // // // // // // // // // // // // //
+// Call by async function flyTo, parameter: data of new, current location
+// Compares it to both location and weather goals and displays output if new goal reached
+// Turns weather boolean to false, so score cannot be given again for the same goal and hides the box
+// Calls function ....Printer, if location is reached to display fun fact to output field
+// Calls function updateScore, which adds addition score to existing and displays it
+
 function goalChecker(data) {
   // Budapest
   if (data.ident === 'LHBP' && budapest) {
