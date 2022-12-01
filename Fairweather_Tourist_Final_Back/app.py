@@ -1,4 +1,8 @@
-from flask import Flask, request, jsonify
+# Connects the python with JavaScript.
+# Calls function airport_fetcher based on player's choice of ICAO code.
+# airport_fetcher return the data to JavaScript.
+
+from flask import Flask, request
 from flask_cors import CORS
 from airport_fetcher import airport_fetcher
 

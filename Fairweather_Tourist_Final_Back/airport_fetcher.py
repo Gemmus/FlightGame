@@ -1,3 +1,6 @@
+# Fetches all the EU large_airports and compares it to the parameter (ICAO code).
+# Returns data to function new_game and fly_to.
+
 import mysql.connector
 import json
 from icao_weather_fetcher import weather_fetcher
@@ -5,7 +8,7 @@ from distance_co2_calculator import distance_emission_calculator
 
 
 def airport_fetcher(icao):
-    list_of_big_european_airports = []
+    list_of_big_european_airports = []             # For storing the fetched data.
     cursor = connection.cursor()
     cursor.execute(
         "SELECT airport.ident, airport.name, airport.municipality, country.name, airport.latitude_deg, airport.longitude_deg "
@@ -14,9 +17,9 @@ def airport_fetcher(icao):
     result = cursor.fetchall()
     if cursor.rowcount > 0:
         for row in result:
-            if icao == row[0]:
-                active = True
-                weather = weather_fetcher(icao)
+            if icao == row[0]:              # Checks if given parameter matches with ident of fetched data.
+                active = True                   # If it does, becomes the active new airport
+                weather = weather_fetcher(icao)     # and calls function weather_fetcher, which returns its current weather.
                 response = {
                     "ident": row[0],
                     "active": active,
@@ -28,10 +31,10 @@ def airport_fetcher(icao):
                     "weather": weather,
                 }
                 json.dumps(response, default=lambda o: o.__dict__, indent=4)
-                list_of_big_european_airports.insert(0, response)
+                list_of_big_european_airports.insert(0, response)                       # Insert it to first place for more convenient use.
             else:
                 active = False
-                distance, co2_consumption = distance_emission_calculator(icao, row[0])
+                distance, co2_consumption = distance_emission_calculator(icao, row[0])      # Calls function that calculates in advance the distance and CO2 emission from parameter.
                 response = {
                     "ident": row[0],
                     "active": active,
