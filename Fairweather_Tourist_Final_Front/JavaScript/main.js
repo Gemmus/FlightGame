@@ -1,5 +1,8 @@
 'use strict';
-// Map
+
+// // // // // // // // // // // //
+// Map:                          //
+// // // // // // // // // // // //
 const map = L.map('map', {tap: false});
 L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
   maxZoom: 20,
@@ -7,7 +10,10 @@ L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
 }).addTo(map);
 map.setView([60, 24], 7);
 
-// Global variables:
+
+// // // // // // // // // // // //
+// Global variables:             //
+// // // // // // // // // // // //
 const apiUrl = 'http://127.0.0.1:5000/';
 let playerName;
 const activeIcon = L.divIcon({className: 'active-icon'});
@@ -29,7 +35,10 @@ let sunny = Boolean(true);
 let snows = Boolean(true);
 let endOfGame = Boolean(false);
 
-// EventListener for username:
+
+// // // // // // // // // // // //
+// EventListener for username:   //
+// // // // // // // // // // // //
 document.querySelector('#player-form').addEventListener('submit', function (evt) {
   evt.preventDefault();
   playerName = document.querySelector('#player-input').value;
@@ -39,7 +48,10 @@ document.querySelector('#player-form').addEventListener('submit', function (evt)
   gameSetup(`${apiUrl}new_game?player=${playerName}&loc=EFHK`);
 });
 
-// Setting up the game:
+
+// // // // // // // // // // // //
+// Setting up the game:          //
+// // // // // // // // // // // //
 async function gameSetup(url) {
   try {
     const response = await fetch(url);
@@ -52,7 +64,10 @@ async function gameSetup(url) {
   }
   }
 
-// Function for chosen new locations:
+
+// // // // // // // // // // // // // // //
+// Function for chosen new locations:     //
+// // // // // // // // // // // // // // //
 async function flyTo(url, previous_data) {
   if (!endOfGame) {
     document.querySelector('.nothing-box').innerHTML = '';
@@ -73,7 +88,10 @@ async function flyTo(url, previous_data) {
   }
 }
 
-// Function for rules:
+
+// // // // // // // // // // // //
+// Function for rules:           //
+// // // // // // // // // // // //
 function rule() {
   document.querySelector('.update-box').innerHTML = `Welcome, ${playerName}! Let's select your first destination!`;
   document.querySelector('.text-box').innerHTML = `You have had this bucket list for a while now and it's time to put things finally into motion!<br>
@@ -87,7 +105,10 @@ function rule() {
     - Guessed "Easter Egg" location: +1000 points<br>`
 }
 
-// Function to add the map markers based to current location:
+
+// // // // // // // // // // // // // // // // // // // // // // // //
+// Function to add the map markers based to current location:        //
+// // // // // // // // // // // // // // // // // // // // // // // //
 async function addDestination(data) {
   for (let airport of data) {
     const marker = L.marker([airport.latitude, airport.longitude]).addTo(map);
@@ -116,21 +137,30 @@ async function addDestination(data) {
   }
 }
 
-// Function to update weather row of current location:
+
+// // // // // // // // // // // // // // // // // // // // // // // //
+// Function to update weather row of current location:               //
+// // // // // // // // // // // // // // // // // // // // // // // //
 function updateWeather(data) {
     document.getElementById('current-weather-condition').innerHTML = data.weather.main;
     document.getElementById('current-temperature').innerHTML = `Temperature: ${data.weather.temp}°C`;
     document.getElementById('current-wind-speed').innerHTML = `Wind: ${data.weather.wind}m/s`;
 }
 
-// Function to update location:
+
+// // // // // // // // // // // //
+// Function to update location:  //
+// // // // // // // // // // // //
 function updateLocation(data) {
     document.getElementById('current-airport').innerHTML = data.name;
     document.getElementById('current-city').innerHTML = data.location;
     document.getElementById('current-country').innerHTML = data.country;
 }
 
-// Function to update CO2 emission and distance:
+
+// // // // // // // // // // // // // // // // // // // //
+// Function to update CO2 emission and distance:         //
+// // // // // // // // // // // // // // // // // // // //
 function updateState(data) {
   co2_consumed += data.co2_consumption;
   co2_budget -= data.co2_consumption;
@@ -140,7 +170,9 @@ function updateState(data) {
   document.getElementById('current-odometer').innerHTML = `Travelled distance: ${travelled_distance}km`;
 }
 
-// Function to check if any of the goals were reached:
+// // // // // // // // // // // // // // // // // // // // // // // //
+// Function to check if any of the goals were reached:               //
+// // // // // // // // // // // // // // // // // // // // // // // //
 function goalChecker(data) {
   // Budapest
   if (data.ident === 'LHBP' && budapest) {
@@ -256,13 +288,19 @@ function goalChecker(data) {
   progressChecker()
 }
 
-// Function to update score:
+
+// // // // // // // // // // // //
+// Function to update score:     //
+// // // // // // // // // // // //
 function updateScore(addition) {
     score += addition;
   document.querySelector('#current-score').innerHTML = `${score} points`;
 }
 
-// Function to check progress
+
+// // // // // // // // // // // //
+// Function to check progress:   //
+// // // // // // // // // // // //
 function progressChecker() {
   document.querySelector('.nothing-box').innerHTML = `Please select your next location.`;
   if (score >= 3000) {
@@ -277,7 +315,10 @@ function progressChecker() {
   }
 }
 
-// Functions for fun facts:
+
+// // // // // // // // // // // //
+// Functions for fun facts:      //
+// // // // // // // // // // // //
 function londonPrinter() {
   london = Boolean(false);
   const london_riddle = document.querySelector('.riddle1');
