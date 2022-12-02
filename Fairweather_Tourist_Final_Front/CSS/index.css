@@ -185,8 +185,6 @@ p {
     position: absolute;
     top: 0;
     z-index: 9999;
-    color: var(--white);
-
 }
 
 #player-form {
@@ -194,11 +192,26 @@ p {
     width: 40%;
     margin: 15rem auto;
     flex-direction: column;
+    border-radius: 6px;
+    border: var(--lighter-blue) solid 1px;
+    box-sizing: border-box;
 }
 
 #player-form input {
     padding: 1rem;
     font-size: 1.4rem;
+    text-align: center;
+}
+
+.submitBtn {
+    background-color: var(--lighter-blue);
+}
+
+.submitBtn:hover {
+    background-color: #617c7c;
+    color: floralwhite;
+    border: rgba(0, 0, 0, 0) solid 1px;
+    transition: 1s;
 }
 
 .done {
