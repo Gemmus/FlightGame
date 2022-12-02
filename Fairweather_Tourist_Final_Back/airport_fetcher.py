@@ -1,5 +1,5 @@
 # Fetches all the EU large_airports and compares it to the parameter (ICAO code).
-# Calls function weather_fetcher for active location, which returns current weather.
+# Calls function weather_fetcher with the latitude and longitude of ICAO code, which returns current weather.
 # For the rest of the large airports, function distance_emission_calculator is called for distance and CO2 emission data.
 # Returns data to function new_game and fly_to.
 
@@ -21,7 +21,7 @@ def airport_fetcher(icao):
         for row in result:
             if icao == row[0]:              # Checks if given parameter matches with ident of fetched data.
                 active = True                   # If it does, becomes the active new airport
-                weather = weather_fetcher(icao)     # and calls function weather_fetcher, which returns its current weather.
+                weather = weather_fetcher(row[4], row[5])     # and calls function weather_fetcher, which returns its current weather.
                 response = {
                     "ident": row[0],
                     "active": active,
