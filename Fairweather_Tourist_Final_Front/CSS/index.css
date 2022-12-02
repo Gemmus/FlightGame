@@ -130,7 +130,7 @@ ul {
     margin-bottom: 0.6rem;
 }
 
-.box h2, .box figure {
+.box figure {
     margin: 0;
     padding: 0;
 }
@@ -143,22 +143,18 @@ ul {
     line-height: 2rem;
 }
 
-.update-box {
+.output {
     text-align: center;
 }
-.weather-box {
-    text-align: center;
+
+.outcome-box {
+    font-size: 1.2rem;
 }
+
 .text-box {
     text-align: left;
 }
-.order-box {
-    text-align: center;
-    font-size: 1.2rem;
-}
-.nothing-box {
-    text-align: center;
-}
+
 p {
     margin:0.3rem 0.6rem;
 }
@@ -177,26 +173,9 @@ p {
 .box img {
     height: 2rem;
 }
+
 .riddle {
     line-height: 1.4rem;
-}
-
-.goal {
-    background-image: url('../Images/splatter.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    padding: 9rem 7rem;
-    text-align: center;
-    position: absolute;
-    bottom: 30%;
-    filter: drop-shadow(0 0 30px #333);
-    transform: rotate(340deg);
-    line-height: 1rem;
-    z-index: 999;
-}
-
-.goal h2, .goal p{
-    margin: 0.5rem;
 }
 
 #player-modal {
@@ -227,9 +206,22 @@ p {
     opacity: 0.15;
 }
 
-.lead-img {
-    width: 100%;
-    margin: 0 0 1rem 0;
+.travelBtn {
+    background-color: black;
+    color: floralwhite;
+    border-radius: 3px;
+    border: black solid 1px;
+    box-shadow: rgba(0, 0, 0, 0.06) 3px 3px 4px;
+    padding: 0.3rem 0.5rem;
+    alignment: center;
+}
+.travelBtn:hover {
+    background-color: #464646;
+    border: rgba(0, 0, 0, 0) solid 1px;
+    transition: 500ms;
+}
+.pop-up {
+    text-align: center;
 }
 
 @media screen and (min-width: 769px) {

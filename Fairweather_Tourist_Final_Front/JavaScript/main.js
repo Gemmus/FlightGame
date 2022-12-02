@@ -93,10 +93,10 @@ async function gameSetup(url) {
 
 async function flyTo(url, previous_data) {
   if (!endOfGame) {
-    document.querySelector('.nothing-box').innerHTML = '';
-    document.querySelector('.update-box').innerHTML = '';
+    document.querySelector('.status-box').innerHTML = '';
     document.querySelector('.weather-box').innerHTML = '';
     document.querySelector('.text-box').innerHTML = '';
+    document.querySelector('.order-box').innerHTML = '';
     updateState(previous_data);
     updateLocation(previous_data);
     try {
@@ -119,7 +119,7 @@ async function flyTo(url, previous_data) {
 // Displays rules to output
 
 function rule() {
-  document.querySelector('.update-box').innerHTML = `Welcome, ${playerName}! Let's select your first destination!`;
+  document.querySelector('.status-box').innerHTML = `Welcome, ${playerName}! Let's select your first destination!`;
   document.querySelector('.text-box').innerHTML = `You have had this bucket list for a while now and it's time to put things finally into motion!<br>
     - You wish to visit 5 + 1 secret locations and reach 5 weather targets in Europe.<br>
     - Each secret location has an assigned weather goal, they are paired the same way as they are listed.<br>
@@ -217,118 +217,109 @@ function updateState(data) {
 // Compares it to both location and weather goals and displays output if new goal reached
 // Turns weather boolean to false, so score cannot be given again for the same goal and hides the box
 // Calls function ....Printer, if location is reached to display fun fact to output field
+// Calls function goal...., which hides the weather box and changes boolean to avoid score given more than one for same weather
 // Calls function updateScore, which adds addition score to existing and displays it
 
 function goalChecker(data) {
   // Budapest
   if (data.ident === 'LHBP' && budapest) {
+    document.querySelector('.status-box').innerHTML = `You guessed the Easter Egg location: +1000points.`;
     updateScore(1000);
-    document.querySelector('.update-box').innerHTML = `You guessed the Easter Egg location: +1000points.`;
     budapestPrinter();
   }
   // London & Rain
   if (london || rainy) {
     if (london && rainy && (data.weather.main === 'Rain' || data.weather.main === 'Drizzle') && (data.ident === 'EGKK' || data.ident === 'EGSS' || data.ident === 'EGGW' || data.ident === 'EGLL')) {
+      document.querySelector('.status-box').innerHTML = `You guessed the first secret location and it rains: +1000points.`;
       updateScore(1000);
-      document.querySelector('.update-box').innerHTML = `You guessed the first secret location and it rains: +1000points.`;
-      document.querySelector('.goal-rainy').classList.add('done');
       londonPrinter();
-      rainy = Boolean(false);
+      goalRainy();
     }
     else if (london && (data.ident === 'EGKK' || data.ident === 'EGSS' || data.ident === 'EGGW' || data.ident === 'EGLL')) {
+      document.querySelector('.status-box').innerHTML = `You guessed the first secret location: +300points.`;
       updateScore(300);
-      document.querySelector('.update-box').innerHTML = `You guessed the first secret location: +300points.`;
       londonPrinter();
     }
     else if (rainy && (data.weather.main === 'Rain' || data.weather.main === 'Drizzle')) {
-      updateScore(500);
       document.querySelector('.weather-box').innerHTML = `It's raining: +500points.`;
-      document.querySelector('.goal-rainy').classList.add('done');
-      rainy = Boolean(false);
+      updateScore(500);
+      goalRainy();
     }
   }
   //Caparica & wind
   if (caparica || windy) {
     if (caparica && windy && data.weather.wind >= 10 && data.ident === 'LPPT') {
+      document.querySelector('.status-box').innerHTML = `You guessed the second secret location and it's windy: +1000points.`;
       updateScore(1000);
-      document.querySelector('.update-box').innerHTML = `You guessed the second secret location and it's windy: +1000points.`;
-      document.querySelector('.goal-windy').classList.add('done');
       caparicaPrinter();
-      windy = Boolean(false);
+      goalWindy();
     }
     else if (caparica && data.ident === 'LPPT') {
+      document.querySelector('.status-box').innerHTML = `You guessed the second secret location: +300points.`;
       updateScore(300);
-      document.querySelector('.update-box').innerHTML = `You guessed the second secret location: +300points.`;
       caparicaPrinter();
     }
     else if (windy && data.weather.wind >= 10) {
-      updateScore(500);
       document.querySelector('.weather-box').innerHTML = `It's windy: +500points.`;
-      document.querySelector('.goal-windy').classList.add('done');
-      windy = Boolean(false);
+      updateScore(500);
+      goalWindy();
     }
   }
   // Prague & clouds
   if (prague || cloudy) {
     if (prague && cloudy && data.weather.main === 'Clouds' && data.ident === 'LKPR') {
+      document.querySelector('.status-box').innerHTML = `You guessed the third secret location and it's cloudy: +1000points.`;
       updateScore(1000);
-      document.querySelector('.update-box').innerHTML = `You guessed the third secret location and it's cloudy: +1000points.`;
-      document.querySelector('.goal-cloudy').classList.add('done');
       praguePrinter();
-      cloudy = Boolean(false);
+      goalCloudy();
     }
     else if (prague && data.ident === 'LKPR') {
+      document.querySelector('.status-box').innerHTML = `You guessed the third secret location: +300points.`;
       updateScore(300);
-      document.querySelector('.update-box').innerHTML = `You guessed the third secret location: +300points.`;
       praguePrinter();
     }
     else if (cloudy && data.weather.main === 'Clouds') {
-      updateScore(500);
       document.querySelector('.weather-box').innerHTML = `It's cloudy: +500points.`;
-      document.querySelector('.goal-cloudy').classList.add('done');
-      cloudy = Boolean(false);
+      updateScore(500);
+      goalCloudy();
     }
   }
   // Ibiza & sunny
   if (ibiza || sunny) {
     if (ibiza && sunny && data.weather.temp >= 15 && data.ident === 'LEIB') {
+      document.querySelector('.status-box').innerHTML = `You guessed the fourth secret location and it's sunny: +1000points.`;
       updateScore(1000);
-      document.querySelector('.update-box').innerHTML = `You guessed the fourth secret location and it's sunny: +1000points.`;
-      document.querySelector('.goal-sunny').classList.add('done');
       ibizaPrinter();
-      sunny = Boolean(false);
+      goalSunny();
     }
     else if (ibiza && data.ident === 'LEIB') {
+      document.querySelector('.status-box').innerHTML = `You guessed the fourth secret location: +300points.`;
       updateScore(300);
-      document.querySelector('.update-box').innerHTML = `You guessed the fourth secret location: +300points.`;
       ibizaPrinter();
     }
     else if (sunny && data.weather.temp >= 15) {
-      updateScore(500);
       document.querySelector('.weather-box').innerHTML = `It's sunny: +500points.`;
-      document.querySelector('.goal-sunny').classList.add('done');
-      sunny = Boolean(false);
+      updateScore(500);
+      goalSunny();
     }
   }
   // Reykjavik & snow
   if (reykjavik || snows) {
     if (reykjavik && snows && data.weather.main === 'Snow' && data.ident === 'BIKF') {
+      document.querySelector('.status-box').innerHTML = `You guessed the fifth secret location and it snows: +1000points.`;
       updateScore(1000);
-      document.querySelector('.update-box').innerHTML = `You guessed the fifth secret location and it snows: +1000points.`;
-      document.querySelector('.goal-snows').classList.add('done');
       reykjavikPrinter();
-      snows = Boolean(false);
+      goalSnows();
     }
     else if (reykjavik && data.ident === 'BIKF') {
+      document.querySelector('.status-box').innerHTML = `You guessed the fifth secret location: +300points.`;
       updateScore(300);
-      document.querySelector('.update-box').innerHTML = `You guessed the fifth secret location: +300points.`;
       reykjavikPrinter();
     }
     else if (snows && data.weather.main === 'Snow') {
-      updateScore(500);
       document.querySelector('.weather-box').innerHTML = `It snows: +500points.`;
-      document.querySelector('.goal-snows').classList.add('done');
-      snows = Boolean(false);
+      updateScore(500);
+      goalSnows();
     }
   }
   progressChecker()
@@ -355,15 +346,15 @@ function updateScore(addition) {
 // Checks if CO2 budget is 0 or less ---> Boolean changes to true, game ends, player cannot travel further ---> Loose
 
 function progressChecker() {
-  document.querySelector('.nothing-box').innerHTML = `Please select your next location.`;
+  document.querySelector('.order-box').innerHTML = `Please select your next location.`;
   if (score >= 3000) {
-     document.querySelector('.order-box').innerHTML = `<b>You won ${playerName}!!! :) Your final score is: ${score} points.</b>`;
-     document.querySelector('.nothing-box').innerHTML = "";
+     document.querySelector('.outcome-box').innerHTML = `<b>You won ${playerName}!!! :) Your final score is: ${score} points.</b>`;
+     document.querySelector('.order-box').innerHTML = "";
      endOfGame = Boolean(true);
   }
   else if (co2_budget <= 0) {
-    document.querySelector('.order-box').innerHTML = `<b>You lost ${playerName} :( Exceeded CO2 budget.</b>`;
-    document.querySelector('.nothing-box').innerHTML = "";
+    document.querySelector('.outcome-box').innerHTML = `<b>You lost ${playerName} :( Exceeded CO2 budget.</b>`;
+    document.querySelector('.order-box').innerHTML = "";
     endOfGame = Boolean(true);
   }
 }
@@ -423,4 +414,37 @@ function budapestPrinter() {
   budapest_riddle.classList.add('done');
   budapest_riddle.innerHTML = 'Budapest, Hungary';
   document.querySelector('.text-box').innerHTML = `Fun fact:<br><b>“If you ever visit it, pay attention to the buildings. They are old, a lot of their facade is deteriorating and a lot of them have bullet marks from WWII and the Hungarian Revolution of 1956. When it gets dark, if you take a walk at the bank of the Danube, it’s beautifully lit up.”</b>`;
+}
+
+
+// // // // // // // // // // // //
+// Functions for weather goals:      //
+// // // // // // // // // // // //
+// Each function is called by function goalChecker when the weather condition is met:
+// - boolean turns false to avoid getting the score twice for the same weather condition
+// - hides the weather box
+
+function goalRainy() {
+  document.querySelector('.goal-rainy').classList.add('done');
+  rainy = Boolean(false);
+}
+
+function goalWindy() {
+  document.querySelector('.goal-windy').classList.add('done');
+  windy = Boolean(false);
+}
+
+function goalCloudy() {
+  document.querySelector('.goal-cloudy').classList.add('done');
+  cloudy = Boolean(false);
+}
+
+function goalSunny() {
+  document.querySelector('.goal-sunny').classList.add('done');
+  sunny = Boolean(false);
+}
+
+function goalSnows() {
+  document.querySelector('.goal-snows').classList.add('done');
+  snows = Boolean(false);
 }
