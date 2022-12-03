@@ -189,7 +189,7 @@ p {
 
 #player-form {
     display: flex;
-    width: 40%;
+    width: 30%;
     margin: 15rem auto;
     flex-direction: column;
     border-radius: 6px;
@@ -199,7 +199,7 @@ p {
 
 #player-form input {
     padding: 1rem;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     text-align: center;
 }
 
@@ -224,7 +224,7 @@ p {
     color: floralwhite;
     border-radius: 3px;
     border: black solid 1px;
-    box-shadow: rgba(0, 0, 0, 0.06) 3px 3px 4px;
+    box-shadow: rgba(0, 0, 0, 0.62) 3px 3px 10px;
     padding: 0.3rem 0.5rem;
     alignment: center;
 }
