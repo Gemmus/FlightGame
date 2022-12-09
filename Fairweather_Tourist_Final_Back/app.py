@@ -14,7 +14,6 @@ cors = CORS(app)
 @app.route('/new_game')
 def new_game():
     args = request.args
-    player_name = args.get("player")
     location = args.get("loc")
     json_data = airport_fetcher(location)
     return json_data
