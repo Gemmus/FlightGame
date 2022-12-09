@@ -10,7 +10,7 @@ app = Flask(__name__)
 cors = CORS(app)
 
 
-# http://127.0.0.1:5000/new_game?player=Gemma&loc=EFHK
+# http://127.0.0.1:5000/new_game?loc=EFHK
 @app.route('/new_game')
 def new_game():
     args = request.args

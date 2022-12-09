@@ -51,7 +51,7 @@ document.querySelector('#player-form').addEventListener('submit', function (evt)
   document.getElementById('replace-name').innerHTML = `<b>${playerName}</b>`;
   document.querySelector('#player-modal').classList.add('hide');
   rule();
-  gameSetup(`${apiUrl}new_game?player=${playerName}&loc=EFHK`);
+  gameSetup(`${apiUrl}new_game?loc=EFHK`);
 });
 
 
@@ -71,7 +71,7 @@ async function gameSetup(url) {
     const data = await response.json();
     updateWeather(data[0]);
     updateLocation(data[0]);
-    await addDestination(data)
+    await addDestination(data);
       } catch (error) {
     console.log('Error1');
   }
@@ -149,7 +149,7 @@ async function addDestination(data) {
       } else {
         marker.setIcon(passiveIcon);
         const popupContent = document.createElement('div');
-        popupContent.classList.add('pop-up')
+        popupContent.classList.add('pop-up');
         const content = document.createElement('p');
         content.innerHTML = `<b>${airport.name}</b><br>${airport.location}, ${airport.country}`;
         popupContent.append(content);
