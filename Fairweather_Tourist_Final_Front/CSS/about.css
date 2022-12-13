@@ -29,7 +29,7 @@ nav ul li::after{
     transition: 1.5s;
 }
 
-nav ul li:hover::after {
+nav ul li:hover::after{
     width: 100%;
     background: var(--white);
 }
@@ -37,6 +37,10 @@ nav ul li:hover::after {
 .flex-wrap {
     display: flex;
     flex-wrap: wrap;
+}
+
+.hide {
+    display: none;
 }
 
 /* app specific */
@@ -52,14 +56,13 @@ html, body {
 .container {
     width: 100%;
     position: relative;
-    height: 120vh;
 }
 
 .page-header {
     background-color: var(--lighter-blue);
     color: var(--white);
     text-shadow: var(--darker-blue) 3px 3px 10px;
-    display: flex;
+    display: inline-block;
     width: 100%;
     box-shadow: rgba(77, 115, 139, 0.3) 3px 3px 10px;
 }
@@ -71,6 +74,7 @@ html, body {
     text-align: center;
     padding: 1rem;
 }
+
 .page-title {
     margin: 0;
     text-align: left;
@@ -78,16 +82,28 @@ html, body {
     padding: 1rem 2rem;
 }
 
-nav{
-    margin: 0 1rem 0 60rem;
-    display: flex;
+h1 {
+    display: inline-block;
+}
+
+nav {
+    display: inline-block;
+    float: right;
+    padding-right: 2rem;
 }
 
 nav ul {
-    display: flex;
+    text-align: right;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 nav li {
+    display: inline-block;
     margin: 1.6rem 1rem 1rem 1rem;
 }
 
@@ -98,17 +114,13 @@ nav li a {
 main {
     padding: 1rem 1.4rem;
 }
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
 
 article{
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 .about {
-    padding-left: 2rem;
+    padding-left: 4.4rem;
+    margin-bottom: 0;
 }
 
 .pic {
@@ -129,25 +141,127 @@ article{
 
 .text {
     font-size: 1rem;
-    margin: 2rem 3rem 1rem 4.4rem;
+    margin: 2rem 4.4rem 1rem 4.4rem;
     text-align: justify;
     line-height: 1.6rem;
 }
 
-@media screen and (min-width: 769px) {
-    .box {
-        font-size: 0.92rem;
-    }
-    #map {
-        width: 40%;
-        height: initial;
+/* for Apple tablet devices (Air & Mini) with max width 821px: */
+
+@media screen and (min-width:767px) and (max-width: 821px) {
+
+    .page-title {
+        display: block;
+        text-align: center;
     }
 
-    .boxes {
-        font-size: initial;
-        width: 60%;
-        padding-left: 1rem;
-        box-sizing: border-box;
+    nav {
+        display: block;
+        float: none;
+        text-align: center;
+        padding: 0;
     }
 
+    nav ul {
+        text-align: center;
+    }
+
+    nav ul li {
+        padding: 0.5rem 2rem 1rem 2rem;
+        margin: 0;
+    }
+
+    .about {
+        padding-left: 3.4rem;
+        font-size: large;
+    }
+
+    .pic {
+        display: block;
+        width: 95%;
+        margin-top: 0;
+        margin-left: auto;
+        margin-right: auto;
+        float: none;
+    }
+
+    .quotation {
+        margin: 1rem 3.4rem 1rem 3.4rem;
+    }
+
+    .text {
+        margin: 2rem 3.4rem 1rem 3.4rem;
+    }
 }
+
+/* for Apple phone devices (XR, SE, 12 Pro) with screen width 374-415px: */
+
+@media screen and (min-width: 374px) and (max-width: 415px) {
+
+    .page-title {
+        display: block;
+        text-align: center;
+        padding-bottom: 0;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    nav {
+        display: block;
+        float: none;
+        text-align: center;
+        padding: 0;
+    }
+
+    nav ul {
+        text-align: center;
+    }
+
+    nav ul li, .page-footer{
+        font-size: 0.8rem;
+        margin-top: 1rem;
+    }
+
+    article {
+        margin-bottom: 0;
+    }
+
+    .about {
+        font-size: medium;
+        padding: 0;
+        margin-top: 0;
+        display: block;
+        text-align: center;
+    }
+
+    figure {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .pic {
+        display: block;
+        width: 100%;
+        margin-top: 0;
+        margin-left: auto;
+        margin-right: auto;
+        float: none;
+    }
+
+    .quotation {
+        margin: 0.5rem 0 1rem 0;
+        font-size: medium;
+    }
+
+    .text {
+        margin: 1rem 0.5rem 1rem 0.5rem;
+        font-size: small;
+    }
+
+    .page-footer {
+        margin-top: 0;
+    }
+}
+

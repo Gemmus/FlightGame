@@ -62,7 +62,7 @@ html, body {
     background-color: var(--lighter-blue);
     color: var(--white);
     text-shadow: var(--darker-blue) 3px 3px 10px;
-    display: inline-block;
+    display: flex;
     width: 100%;
     box-shadow: rgba(77, 115, 139, 0.3) 3px 3px 10px;
 }
@@ -82,28 +82,16 @@ html, body {
     padding: 1rem 2rem;
 }
 
-h1 {
-    display: inline-block;
-}
-
-nav {
-    display: inline-block;
-    float: right;
-    padding-right: 2rem;
+nav{
+    margin: 0 1rem 0 60rem;
+    display: flex;
 }
 
 nav ul {
-    text-align: right;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+    display: flex;
 }
 
 nav li {
-    display: inline-block;
     margin: 1.6rem 1rem 1rem 1rem;
 }
 
@@ -121,8 +109,14 @@ main {
     overflow: hidden;
 }
 
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
 .boxes {
-    width: 100%;
+    width: 60%;
 }
 
 .box {
@@ -243,14 +237,9 @@ p {
     text-align: center;
 }
 
-/* adoption for different-sized devices */
-
-/* for regular devices with screen width over 821px: */
-
-@media screen and (min-width: 821px) {
-
+@media screen and (min-width: 769px) {
     .box {
-        font-size: initial;
+        font-size: 0.92rem;
     }
     #map {
         width: 40%;
@@ -265,87 +254,6 @@ p {
     }
 
 }
-
-/* for Apple tablet devices (Air & Mini) with max width 821px: */
-
-@media screen and (min-width:767px) and (max-width: 821px) {
-
-    .page-title {
-        display: block;
-        text-align: center;
-    }
-
-    nav {
-        display: block;
-        float: none;
-        text-align: center;
-        padding: 0;
-    }
-
-    nav ul {
-        text-align: center;
-    }
-
-    nav ul li {
-        padding: 0.5rem 2rem 1rem 2rem;
-        margin: 0;
-    }
-
-    .box {
-        font-size: small;
-    }
-
-    #player-form input {
-        font-size: 1.3rem;
-    }
-
-}
-
-/* for Apple phone devices (XR, SE, 12 Pro) with screen width 374-415px: */
-
-@media screen and (min-width: 374px) and (max-width: 415px) {
-
-    .page-title {
-        display: block;
-        text-align: center;
-        padding-bottom: 0;
-    }
-
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    nav {
-        display: block;
-        float: none;
-        text-align: center;
-        padding: 0;
-    }
-
-    nav ul {
-        text-align: center;
-    }
-
-    nav ul li, .page-footer{
-        font-size: 0.8rem;
-        margin-top: 1rem;
-    }
-
-    .box {
-        font-size: x-small;
-    }
-
-    #player-form {
-        width: 50%;
-    }
-
-    #player-form input {
-        font-size: medium;
-    }
-
-}
-
-
 
 /* Leaflet icons */
 .active-icon {
