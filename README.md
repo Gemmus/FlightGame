@@ -19,10 +19,10 @@ User interaction only via IDE. All rules and information is displayed through th
 The scoring is only based on the guessing of the secret location, real-time weather not yet implemented. 
 
 <h2> Second Phase: User-Friendly Interface and Real-Time Weather</h2>
-Implementation of Flask Cors, HTML, CSS, JavaScript parts and real-time weather condition:
+Implementation of Flask Cors, HTML, CSS, JavaScript parts, map as visual and real-time weather condition:
 
 <li>Back-end: Python, SQL database, WeatherAPI, Flask Cors.</li>
-<li>Front-end: HTML, CSS, JavaScript.</li>
+<li>Front-end: HTML, CSS, JavaScript, [Leafletjs](https://leafletjs.com/).</li>
 
 
 The user plays the game using web browser and mouse.
