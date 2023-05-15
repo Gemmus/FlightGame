@@ -16,7 +16,7 @@ User interaction only via IDE. All rules and information is displayed through th
 ![image](https://github.com/Gemmus/FlightGame/assets/112064697/cce1af53-2684-4c57-994c-bf8b219cd3e6)
 <br><i>Figure 1. Example of console output: Guessing one of the right secret location and winning the game</i>
 
-The scoring is only based on the guessing of the secret location, real-time weather not yet implemented. 
+Prototype has two versions: Fairweather_Tourist.py has no implementation of real-time weather, while Fairweather_Tourist_with_API.py has.
 
 <h2> Second Phase: User-Friendly Interface and Real-Time Weather</h2>
 Implementation of Flask Cors, HTML, CSS, JavaScript parts, map as visual and real-time weather condition:
